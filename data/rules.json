@@ -1,0 +1,330 @@
+[
+  {
+    "id": "argocd-needs-k8s",
+    "type": "requires",
+    "tool": "argocd",
+    "needs": { "capabilities": ["kubernetes"] },
+    "severity": "error",
+    "message": "Argo CD deploys to Kubernetes, but your runtime isn't Kubernetes."
+  },
+  {
+    "id": "flux-needs-k8s",
+    "type": "requires",
+    "tool": "flux",
+    "needs": { "capabilities": ["kubernetes"] },
+    "severity": "error",
+    "message": "Flux syncs Git into a Kubernetes cluster, and you don't have one."
+  },
+  {
+    "id": "helm-needs-k8s",
+    "type": "requires",
+    "tool": "helm",
+    "needs": { "capabilities": ["kubernetes"] },
+    "severity": "error",
+    "message": "Helm charts install onto Kubernetes. With no cluster, there's nothing to install onto."
+  },
+  {
+    "id": "kaniko-needs-k8s",
+    "type": "requires",
+    "tool": "kaniko",
+    "needs": { "capabilities": ["kubernetes"] },
+    "severity": "error",
+    "message": "Kaniko builds images inside a Kubernetes pod, but you have no cluster for it to run in."
+  },
+  {
+    "id": "platform-deploy-needs-paas",
+    "type": "requires",
+    "tool": "platform-deploy",
+    "needs": { "capabilities": ["paas"] },
+    "severity": "error",
+    "message": "\"Built into platform\" only works when a platform (Vercel, Railway, Fly.io) runs your app."
+  },
+  {
+    "id": "platform-env-needs-paas",
+    "type": "requires",
+    "tool": "platform-env",
+    "needs": { "capabilities": ["paas"] },
+    "severity": "error",
+    "message": "Platform env vars need a platform. Your runtime doesn't have a dashboard to put them in."
+  },
+  {
+    "id": "platform-logs-needs-paas",
+    "type": "requires",
+    "tool": "platform-logs",
+    "needs": { "capabilities": ["paas"] },
+    "severity": "error",
+    "message": "Platform logs come from a hosting platform, and your runtime isn't one."
+  },
+  {
+    "id": "github-actions-needs-github",
+    "type": "requires",
+    "tool": "github-actions",
+    "needs": { "tools": ["github"] },
+    "severity": "error",
+    "message": "GitHub Actions runs on GitHub repos, but your code lives somewhere else."
+  },
+  {
+    "id": "gitlab-ci-needs-gitlab",
+    "type": "requires",
+    "tool": "gitlab-ci",
+    "needs": { "tools": ["gitlab"] },
+    "severity": "error",
+    "message": "GitLab CI only runs on GitLab projects."
+  },
+  {
+    "id": "azure-pipelines-needs-git",
+    "type": "requires",
+    "tool": "azure-pipelines",
+    "needs": { "tools": ["azure-repos", "github", "bitbucket"] },
+    "severity": "error",
+    "message": "Azure Pipelines can't connect to that source host. Use Azure Repos, GitHub or Bitbucket."
+  },
+  {
+    "id": "ecs-needs-image",
+    "type": "requires",
+    "tool": "aws-ecs",
+    "needs": { "capabilities": ["container-image"] },
+    "severity": "error",
+    "message": "ECS runs container images, but nothing in your stack builds one."
+  },
+  {
+    "id": "k8s-needs-image",
+    "type": "requires",
+    "tool": "kubernetes",
+    "needs": { "capabilities": ["container-image"] },
+    "severity": "error",
+    "message": "Kubernetes runs container images, but nothing in your stack builds one."
+  },
+  {
+    "id": "compose-needs-image",
+    "type": "requires",
+    "tool": "compose-vps",
+    "needs": { "capabilities": ["container-image"] },
+    "severity": "error",
+    "message": "Docker Compose needs an image of your app, and nothing in your stack builds one."
+  },
+  {
+    "id": "cloudformation-needs-aws",
+    "type": "requires",
+    "tool": "cloudformation",
+    "needs": { "capabilities": ["aws"] },
+    "severity": "error",
+    "message": "CloudFormation only manages AWS resources, but your app doesn't run on AWS."
+  },
+  {
+    "id": "cdk-needs-aws",
+    "type": "requires",
+    "tool": "aws-cdk",
+    "needs": { "capabilities": ["aws"] },
+    "severity": "error",
+    "message": "AWS CDK only deploys to AWS, but your app doesn't run on AWS."
+  },
+  {
+    "id": "deploy-script-needs-ci",
+    "type": "requires",
+    "tool": "ci-deploy-script",
+    "needs": { "capabilities": ["ci"] },
+    "severity": "error",
+    "message": "A deploy script in CI needs a CI system to run it in."
+  },
+  {
+    "id": "deploy-script-needs-host",
+    "type": "requires",
+    "tool": "ci-deploy-script",
+    "needs": { "capabilities": ["ssh-host"] },
+    "severity": "error",
+    "message": "Your deploy script SSHes into a server, but your runtime doesn't give you one."
+  },
+
+  {
+    "id": "vercel-helm",
+    "type": "conflicts",
+    "tools": ["vercel", "helm"],
+    "severity": "error",
+    "message": "Vercel isn't Kubernetes. Helm has nowhere to install your chart."
+  },
+  {
+    "id": "vercel-docker",
+    "type": "conflicts",
+    "tools": ["vercel", "docker"],
+    "severity": "error",
+    "message": "Vercel builds from your source code and doesn't run Docker images."
+  },
+  {
+    "id": "vercel-ansible",
+    "type": "conflicts",
+    "tools": ["vercel", "ansible"],
+    "severity": "error",
+    "message": "Ansible configures servers over SSH. On Vercel there are no servers for you to SSH into."
+  },
+  {
+    "id": "vercel-spinnaker",
+    "type": "conflicts",
+    "tools": ["vercel", "spinnaker"],
+    "severity": "error",
+    "message": "Spinnaker has no Vercel integration. Vercel already handles rollouts for you."
+  },
+
+  {
+    "id": "github-actions-pair",
+    "type": "pairs_well",
+    "tools": ["github", "github-actions"],
+    "severity": "bonus",
+    "bonus": 1,
+    "message": "GitHub + GitHub Actions: zero setup, CI lives next to your code."
+  },
+  {
+    "id": "gitlab-ci-pair",
+    "type": "pairs_well",
+    "tools": ["gitlab", "gitlab-ci"],
+    "severity": "bonus",
+    "bonus": 1,
+    "message": "GitLab + GitLab CI: one product for code and pipelines."
+  },
+  {
+    "id": "argocd-k8s-pair",
+    "type": "pairs_well",
+    "tools": ["argocd", "kubernetes"],
+    "severity": "bonus",
+    "bonus": 1,
+    "message": "Argo CD on Kubernetes: Git becomes the source of truth for your cluster."
+  },
+  {
+    "id": "terraform-ecs-pair",
+    "type": "pairs_well",
+    "tools": ["terraform", "aws-ecs"],
+    "severity": "bonus",
+    "bonus": 1,
+    "message": "Terraform + ECS: your whole AWS setup is reviewable code."
+  },
+  {
+    "id": "vercel-sentry-pair",
+    "type": "pairs_well",
+    "tools": ["vercel", "sentry"],
+    "severity": "bonus",
+    "bonus": 1,
+    "message": "Vercel + Sentry: one-click integration, errors linked to deploys."
+  },
+  {
+    "id": "fly-docker-pair",
+    "type": "pairs_well",
+    "tools": ["fly-io", "docker"],
+    "severity": "bonus",
+    "bonus": 1,
+    "message": "Fly.io runs your Dockerfile as-is. Nice and portable."
+  },
+  {
+    "id": "sops-flux-pair",
+    "type": "pairs_well",
+    "tools": ["sops", "flux"],
+    "severity": "bonus",
+    "bonus": 1,
+    "message": "Flux decrypts SOPS secrets natively. Proper GitOps secrets."
+  },
+
+  {
+    "id": "k8s-overkill-solo",
+    "type": "overkill",
+    "tool": "kubernetes",
+    "when": { "scales": ["solo"] },
+    "severity": "warning",
+    "message": "Kubernetes for a solo project means you're now a part-time cluster admin."
+  },
+  {
+    "id": "spinnaker-overkill",
+    "type": "overkill",
+    "tool": "spinnaker",
+    "when": { "scales": ["solo", "startup"] },
+    "severity": "warning",
+    "message": "Spinnaker was built for Netflix-sized release trains. It needs its own team to run."
+  },
+  {
+    "id": "vault-overkill-solo",
+    "type": "overkill",
+    "tool": "vault",
+    "when": { "scales": ["solo"] },
+    "severity": "warning",
+    "message": "Running Vault for one developer's API keys is a lot of unsealing for very little."
+  },
+  {
+    "id": "ecs-overkill-solo",
+    "type": "overkill",
+    "tool": "aws-ecs",
+    "when": { "scales": ["solo"] },
+    "severity": "warning",
+    "message": "ECS means VPCs, load balancers and IAM roles. Heavy for a side project."
+  },
+  {
+    "id": "datadog-overkill-solo",
+    "type": "overkill",
+    "tool": "datadog",
+    "when": { "scales": ["solo"] },
+    "severity": "warning",
+    "message": "Datadog for 100 users: the monitoring bill will be bigger than the hosting bill."
+  },
+  {
+    "id": "jenkins-overkill-solo",
+    "type": "overkill",
+    "tool": "jenkins",
+    "when": { "scales": ["solo"] },
+    "severity": "warning",
+    "message": "Running a Jenkins server just to run your tests is a second project."
+  },
+
+  {
+    "id": "secrets-missing-payments",
+    "type": "missing",
+    "phase": "secrets",
+    "when": { "tags": ["handles-payments"] },
+    "severity": "error",
+    "message": "You handle payments with no secrets management. Where does the Stripe key live?"
+  },
+  {
+    "id": "observe-missing-compliance",
+    "type": "missing",
+    "phase": "observe",
+    "when": { "tags": ["compliance"] },
+    "severity": "error",
+    "message": "Compliance needs monitoring and logs. Auditors won't accept \"we'd have noticed\"."
+  },
+  {
+    "id": "observe-missing-startup",
+    "type": "missing",
+    "phase": "observe",
+    "when": { "scales": ["startup"] },
+    "severity": "warning",
+    "message": "10k users and no monitoring. You'll find out about outages on X."
+  },
+  {
+    "id": "ci-missing-team",
+    "type": "missing",
+    "phase": "ci",
+    "when": { "scales": ["startup", "enterprise"] },
+    "severity": "warning",
+    "message": "No CI with a whole team pushing code. \"Works on my machine\" is not a test suite."
+  },
+  {
+    "id": "infra-missing-enterprise",
+    "type": "missing",
+    "phase": "infra",
+    "when": { "scales": ["enterprise"] },
+    "severity": "warning",
+    "message": "Enterprise infra created by clicking in a console can't be reviewed or reproduced."
+  },
+
+  {
+    "id": "dotenv-insecure",
+    "type": "insecure",
+    "tool": "dotenv-file",
+    "severity": "warning",
+    "message": "A .env file on the server is one leaked backup or bad commit away from a breach."
+  },
+  {
+    "id": "platform-env-compliance",
+    "type": "insecure",
+    "tool": "platform-env",
+    "when": { "tags": ["compliance"] },
+    "severity": "warning",
+    "message": "Plain env vars have no audit log or rotation, and your auditors will ask for both."
+  }
+]

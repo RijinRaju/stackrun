@@ -1,0 +1,50 @@
+[
+  {
+    "id": "source",
+    "name": "Source control",
+    "description": "Where your code lives and changes are reviewed.",
+    "allowNone": false
+  },
+  {
+    "id": "ci",
+    "name": "CI (build + test)",
+    "description": "Builds and tests every change automatically.",
+    "allowNone": true
+  },
+  {
+    "id": "build",
+    "name": "Build / package",
+    "description": "Turns your code into something you can ship, usually a container image.",
+    "allowNone": true
+  },
+  {
+    "id": "infra",
+    "name": "Infrastructure (IaC)",
+    "description": "Creates servers, networks and databases from code instead of clicking around.",
+    "allowNone": true
+  },
+  {
+    "id": "runtime",
+    "name": "Runtime / hosting",
+    "description": "Where your app actually runs.",
+    "allowNone": false
+  },
+  {
+    "id": "cd",
+    "name": "Deploy / CD",
+    "description": "Gets the new version onto the runtime.",
+    "allowNone": true
+  },
+  {
+    "id": "secrets",
+    "name": "Secrets",
+    "description": "Keeps API keys and passwords out of your code.",
+    "allowNone": true
+  },
+  {
+    "id": "observe",
+    "name": "Monitoring / logs",
+    "description": "Tells you when things break, ideally before your users do.",
+    "allowNone": true
+  }
+]

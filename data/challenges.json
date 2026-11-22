@@ -1,0 +1,46 @@
+[
+  {
+    "id": "solo-zero-budget",
+    "title": "Solo dev, $0 budget",
+    "brief": "Ship a Next.js side project. One developer, no money, ~100 users.",
+    "scale": "solo",
+    "budget": 0,
+    "tags": [],
+    "mustHave": ["source", "runtime"],
+    "niceToHave": ["ci", "observe"],
+    "weights": { "valid": 40, "simplicity": 25, "cost": 20, "coverage": 10, "bestPractice": 5 }
+  },
+  {
+    "id": "startup-10k-users",
+    "title": "Startup, 10k users",
+    "brief": "A team of 5 running a SaaS API with Stripe payments and 10,000 users. Budget around $500/month.",
+    "scale": "startup",
+    "budget": 500,
+    "tags": ["handles-payments"],
+    "mustHave": ["source", "ci", "runtime", "secrets"],
+    "niceToHave": ["build", "cd", "observe"],
+    "weights": { "valid": 35, "simplicity": 15, "cost": 15, "coverage": 20, "bestPractice": 15 }
+  },
+  {
+    "id": "enterprise-compliance",
+    "title": "Enterprise compliance",
+    "brief": "50 engineers, dozens of services, SOC 2 audit next quarter. Everything must be reproducible and audited.",
+    "scale": "enterprise",
+    "budget": 20000,
+    "tags": ["compliance", "handles-payments"],
+    "mustHave": ["source", "ci", "build", "infra", "runtime", "cd", "secrets", "observe"],
+    "niceToHave": [],
+    "weights": { "valid": 30, "simplicity": 5, "cost": 5, "coverage": 30, "bestPractice": 30 }
+  },
+  {
+    "id": "chaos-mode",
+    "title": "Chaos mode",
+    "brief": "Use as many tools as possible without breaking the deploy. Just for fun.",
+    "scale": "enterprise",
+    "budget": 100000,
+    "tags": ["chaos"],
+    "mustHave": ["source", "runtime"],
+    "niceToHave": ["ci", "build", "infra", "cd", "secrets", "observe"],
+    "weights": { "valid": 50, "simplicity": 0, "cost": 0, "coverage": 50, "bestPractice": 0 }
+  }
+]
