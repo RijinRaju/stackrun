@@ -5,6 +5,7 @@ import { challengeById } from "@/lib/catalog";
 import { useStack } from "@/store/useStack";
 import { ResultView } from "./ResultView";
 import { ShareActions } from "./ShareActions";
+import { SubmitButton } from "./SubmitButton";
 
 export function ResultPanel() {
   const run = useStack((s) => s.run);
@@ -24,7 +25,12 @@ export function ResultPanel() {
       ref={ref}
       result={result}
       challenge={challenge}
-      actions={<ShareActions stack={stack} result={result} challenge={challenge} />}
+      actions={
+        <div className="flex flex-col gap-3">
+          <ShareActions stack={stack} result={result} challenge={challenge} />
+          <SubmitButton stack={stack} challengeId={challenge.id} passed={result.passed} />
+        </div>
+      }
     />
   );
 }

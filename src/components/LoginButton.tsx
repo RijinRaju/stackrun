@@ -1,12 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import {
-  githubAvatar,
-  githubName,
-  signInWithGitHub,
-  signOut,
-  useUser,
-} from "@/lib/supabase/useUser";
+import { githubAvatar, githubName } from "@/lib/githubUser";
+import { signInWithGitHub, signOut, useUser } from "@/lib/supabase/useUser";
 
 export function LoginButton() {
   const state = useUser();

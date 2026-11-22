@@ -43,13 +43,3 @@ export async function signInWithGitHub() {
 export async function signOut() {
   await getSupabaseBrowser()?.auth.signOut();
 }
-
-export function githubName(user: User): string {
-  const m = user.user_metadata as Record<string, unknown>;
-  return String(m.user_name ?? m.preferred_username ?? m.name ?? "you");
-}
-
-export function githubAvatar(user: User): string | null {
-  const m = user.user_metadata as Record<string, unknown>;
-  return typeof m.avatar_url === "string" ? m.avatar_url : null;
-}
