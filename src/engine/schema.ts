@@ -206,6 +206,14 @@ export interface Issue {
   message: string;
 }
 
+/** A `pairs_well` rule that matched. */
+export interface Bonus {
+  ruleId: string;
+  tools: [ToolId, ToolId];
+  bonus: number;
+  message: string;
+}
+
 export interface RunStep {
   phase: PhaseId;
   tool: ToolId | null;
@@ -217,6 +225,7 @@ export interface RunResult {
   passed: boolean;
   steps: RunStep[];
   issues: Issue[];
+  bonuses: Bonus[];
   score: number;
   breakdown: Record<keyof Weights, number>;
   roast: string;
