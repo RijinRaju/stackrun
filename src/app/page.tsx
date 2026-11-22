@@ -1,31 +1,29 @@
-import { loadData } from "@/engine/load";
+import Link from "next/link";
+import { Board } from "@/components/Board";
 
-// M1 placeholder: proves the data loads and validates. The real board lands in M3.
-export default function Home() {
-  const { phases, tools, challenges } = loadData();
+export default async function Home({ searchParams }: PageProps<"/">) {
+  const { c } = await searchParams;
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-4xl font-bold tracking-tight">StackRun</h1>
-      <p className="mt-2 text-zinc-400">
-        Pick a tool per phase, press Run, watch it pass or fail. {challenges.length} challenges,{" "}
-        {tools.length} tools.
-      </p>
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {phases.map((phase) => (
-          <section key={phase.id} className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
-            <h2 className="font-semibold">{phase.name}</h2>
-            <p className="mt-1 text-xs text-zinc-500">{phase.description}</p>
-            <ul className="mt-3 space-y-1 text-sm text-zinc-300">
-              {tools
-                .filter((t) => t.phase === phase.id)
-                .map((t) => (
-                  <li key={t.id}>{t.name}</li>
-                ))}
-              {phase.allowNone && <li className="text-zinc-500 italic">None</li>}
-            </ul>
-          </section>
-        ))}
-      </div>
+    <main className="mx-auto max-w-7xl px-4 py-8 sm:py-10">
+      <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
+            Stack<span className="text-violet-400">Run</span>
+          </h1>
+          <p className="mt-1 text-zinc-400">
+            Pick a tool for each phase, press Run, and see if your deploy survives.
+          </p>
+        </div>
+        <nav className="flex gap-4 text-sm text-zinc-400">
+          <Link href="/challenges" className="hover:text-zinc-100">
+            Challenges
+          </Link>
+          <Link href="/leaderboard" className="hover:text-zinc-100">
+            Leaderboard
+          </Link>
+        </nav>
+      </header>
+      <Board initialChallengeId={typeof c === "string" ? c : undefined} />
     </main>
   );
 }
