@@ -4,6 +4,7 @@ import { phases } from "@/lib/catalog";
 import { useStack } from "@/store/useStack";
 import { ChallengePicker } from "./ChallengePicker";
 import { FlowCanvas, FlowList } from "./FlowCanvas";
+import { ResultPanel } from "./ResultPanel";
 import { RunButton } from "./RunButton";
 import { PhaseColumn } from "./PhaseColumn";
 import { ToolInfoDrawer } from "./ToolInfoDrawer";
@@ -55,6 +56,8 @@ export function Board({ initialChallengeId }: { initialChallengeId?: string }) {
           <FlowList />
         </div>
       </section>
+
+      <ResultPanel />
 
       <ToolInfoDrawer />
     </div>
