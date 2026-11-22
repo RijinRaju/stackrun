@@ -22,6 +22,8 @@ interface StackState {
   revealed: number;
 
   setChallenge: (id: string) => void;
+  /** load a challenge and/or stack in one go, e.g. from the URL */
+  hydrate: (init: { challengeId?: string; stack?: Stack | null }) => void;
   selectTool: (phase: PhaseId, toolId: string | null) => void;
   clearStack: () => void;
   openInfo: (toolId: string | null) => void;
@@ -48,6 +50,12 @@ export const useStack = create<StackState>()((set, get) => ({
     if (!challengeById(id) || id === get().challengeId) return;
     stopTimer();
     set({ challengeId: id, ...resetRun });
+  },
+
+  hydrate: ({ challengeId, stack }) => {
+    stopTimer();
+    const valid = challengeById(challengeId) ? challengeId! : get().challengeId;
+    set({ challengeId: valid, stack: stack ?? get().stack, ...resetRun });
   },
 
   selectTool: (phase, toolId) => {

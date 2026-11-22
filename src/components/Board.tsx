@@ -1,6 +1,8 @@
 "use client";
 import { useEffect } from "react";
+import type { Stack } from "@/engine";
 import { phases } from "@/lib/catalog";
+import { sharePath } from "@/lib/share";
 import { useStack } from "@/store/useStack";
 import { ChallengePicker } from "./ChallengePicker";
 import { FlowCanvas, FlowList } from "./FlowCanvas";
@@ -9,14 +11,24 @@ import { RunButton } from "./RunButton";
 import { PhaseColumn } from "./PhaseColumn";
 import { ToolInfoDrawer } from "./ToolInfoDrawer";
 
-export function Board({ initialChallengeId }: { initialChallengeId?: string }) {
-  const setChallenge = useStack((s) => s.setChallenge);
+export function Board({
+  initialChallengeId,
+  initialStack,
+}: {
+  initialChallengeId?: string;
+  initialStack?: Stack | null;
+}) {
   const clearStack = useStack((s) => s.clearStack);
   const toolCount = useStack((s) => Object.values(s.stack).filter(Boolean).length);
 
+  // Load ?c= and ?s= once, then keep the URL in sync so the address bar is always shareable.
   useEffect(() => {
-    if (initialChallengeId) setChallenge(initialChallengeId);
-  }, [initialChallengeId, setChallenge]);
+    useStack.getState().hydrate({ challengeId: initialChallengeId, stack: initialStack });
+    return useStack.subscribe((s, prev) => {
+      if (s.stack === prev.stack && s.challengeId === prev.challengeId) return;
+      window.history.replaceState(null, "", sharePath("/", s.stack, s.challengeId));
+    });
+  }, [initialChallengeId, initialStack]);
 
   return (
     <div className="flex flex-col gap-6">
