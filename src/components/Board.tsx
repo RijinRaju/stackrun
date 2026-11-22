@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { phases } from "@/lib/catalog";
 import { useStack } from "@/store/useStack";
 import { ChallengePicker } from "./ChallengePicker";
+import { FlowCanvas, FlowList } from "./FlowCanvas";
+import { RunButton } from "./RunButton";
 import { PhaseColumn } from "./PhaseColumn";
 import { ToolInfoDrawer } from "./ToolInfoDrawer";
 
@@ -37,6 +39,20 @@ export function Board({ initialChallengeId }: { initialChallengeId?: string }) {
           {phases.map((p, i) => (
             <PhaseColumn key={p.id} phase={p} index={i} />
           ))}
+        </div>
+      </section>
+
+      <section
+        aria-label="Deploy"
+        className="sticky bottom-0 z-10 -mx-4 border-t border-zinc-800 bg-zinc-950/90 px-4 py-4 backdrop-blur md:static md:mx-0 md:rounded-2xl md:border"
+      >
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h2 className="text-lg font-semibold">Your flow</h2>
+          <RunButton />
+        </div>
+        <FlowCanvas />
+        <div className="max-h-[40vh] overflow-y-auto md:max-h-none md:overflow-visible">
+          <FlowList />
         </div>
       </section>
 
