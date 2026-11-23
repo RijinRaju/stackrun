@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SiteFooter } from "@/components/SiteFooter";
 import { siteUrl } from "@/lib/share";
 import "./globals.css";
 
@@ -22,7 +23,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-dvh antialiased">{children}</body>
+      <body className="flex min-h-dvh flex-col antialiased">
+        {/* wrapper keeps pages' mx-auto layouts intact; flex-1 pins the footer to the bottom */}
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
+      </body>
     </html>
   );
 }
