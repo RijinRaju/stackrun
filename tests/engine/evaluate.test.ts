@@ -55,7 +55,7 @@ describe("evaluate: valid stacks", () => {
     );
     expect(r.passed).toBe(true);
     expect(r.score).toBe(100);
-    expect(r.roast).toBe("All 8 phases filled and it still deploys. Chaos achieved.");
+    expect(r.roast).toMatch(/chaos/i);
   });
 });
 
@@ -132,7 +132,7 @@ describe("evaluate: rule types", () => {
     const r = run({ source: "github", runtime: "vm-nginx", secrets: "dotenv-file" });
     expect(r.passed).toBe(true);
     expect(ruleIds(r)).toEqual(["dotenv-insecure"]);
-    expect(r.roast).toBe(".env file in production. Living dangerously, I see.");
+    expect(r.burns.some((b) => b.includes(".env"))).toBe(true);
 
     expect(ruleIds(run(vercelSolo))).not.toContain("platform-env-compliance");
     expect(ruleIds(run(vercelSolo, challenge("enterprise-compliance")))).toContain(
@@ -163,7 +163,7 @@ describe("evaluate: run order", () => {
     // skipped steps carry no messages, but all errors are still listed
     expect(r.steps.slice(2).every((s) => s.messages.length === 0)).toBe(true);
     expect(ruleIds(r)).toEqual(["github-actions-needs-github", "argocd-needs-k8s"]);
-    expect(r.roast).toBe("Deployment broke at CI (build + test). Back to the whiteboard.");
+    expect(r.roast).toContain("CI (build + test)");
   });
 
   it("warnings never stop the run", () => {
@@ -196,7 +196,8 @@ describe("evaluate: scoring and determinism", () => {
     });
     expect(heavy.passed).toBe(true);
     expect(simple.score).toBeGreaterThan(heavy.score);
-    expect(heavy.roast).toBe("Kubernetes for a side project? Bold.");
+    expect(heavy.roast).toMatch(/^8 tools for/);
+    expect(heavy.burns.length).toBeGreaterThan(0);
   });
 
   it("is deterministic: same stack + challenge gives an identical result", () => {

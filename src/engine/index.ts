@@ -3,5 +3,5 @@ export * from "./schema";
 export { loadData, validateData, checkReferences } from "./load";
 export { evaluate, applyRules, buildSteps, checkStack, matchesCondition } from "./evaluate";
 export { computeScore } from "./score";
-export { pickRoast, ROASTS } from "./roast";
+export { BURNS, HEADLINES, matchBurns, matchRoast, pickBurns, pickRoast } from "./roast";
 export { encodeStack, decodeStack, emptyStack } from "./encode";

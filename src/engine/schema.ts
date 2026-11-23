@@ -228,6 +228,9 @@ export interface RunResult {
   bonuses: Bonus[];
   score: number;
   breakdown: Record<keyof Weights, number>;
+  /** headline roast for the whole run */
   roast: string;
+  /** up to 3 extra jabs at specific choices */
+  burns: string[];
   stats: { toolCount: number; avgDifficulty: number; monthlyCostHint: string };
 }

@@ -1,7 +1,7 @@
 // evaluate(stack, challenge, data) → RunResult (SPEC.md section 6).
 // Pure TypeScript, no React or DB imports, no randomness or clock: the same
 // input always gives the same output, so the server can re-run it to trust a score.
-import { pickRoast } from "./roast";
+import { pickBurns, pickRoast } from "./roast";
 import { computeScore } from "./score";
 import {
   PHASE_IDS,
@@ -186,7 +186,7 @@ export function evaluate(stack: Stack, challenge: Challenge, data: Data): RunRes
   const { score, breakdown } = computeScore({ passed, tools, issues, bonuses, challenge });
 
   const failedStep = steps.find((s) => s.status === "fail");
-  const roast = pickRoast({
+  const roastCtx = {
     stack,
     tools,
     challenge,
@@ -194,7 +194,9 @@ export function evaluate(stack: Stack, challenge: Challenge, data: Data): RunRes
     score,
     issues,
     failedPhase: data.phases.find((p) => p.id === failedStep?.phase) ?? null,
-  });
+  };
+  const roast = pickRoast(roastCtx);
+  const burns = pickBurns(roastCtx);
 
   const avg = tools.length ? tools.reduce((s, t) => s + t.difficulty, 0) / tools.length : 0;
   return {
@@ -205,6 +207,7 @@ export function evaluate(stack: Stack, challenge: Challenge, data: Data): RunRes
     score,
     breakdown,
     roast,
+    burns,
     stats: {
       toolCount: tools.length,
       avgDifficulty: Math.round(avg * 10) / 10,

@@ -75,9 +75,21 @@ export const ResultView = forwardRef<
       </div>
 
       <div className="flex min-w-0 flex-col gap-5">
-        <blockquote className="text-xl leading-snug font-semibold text-zinc-50 sm:text-2xl">
-          “{result.roast}”
-        </blockquote>
+        <div className="flex flex-col gap-3">
+          <blockquote className="text-xl leading-snug font-semibold text-zinc-50 sm:text-2xl">
+            “{result.roast}”
+          </blockquote>
+          {result.burns.length > 0 && (
+            <ul aria-label="More roasts" className="flex flex-col gap-1.5">
+              {result.burns.map((b) => (
+                <li key={b} className="flex gap-2 text-sm leading-snug text-zinc-300">
+                  <span aria-hidden>🔥</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         {actions}
 
